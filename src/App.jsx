@@ -22,14 +22,21 @@ function App() {
     console.log(data)
   }
 
-
-
-
   return (
-    <Container maxWidth="sm" className='container'>
-      <Box sx={{ mt: 4 }} className='box'>
-        <Typography variant="h4" gutterBottom sx={{ fontWeight: 800 }}>
-          Cadastro de Apartamento
+    <Container maxWidth="sm" >
+      <Box className='box' sx={
+        {
+          mt: 4,
+          display: "flex",
+          flexDirection: "column",
+          padding: "50px",
+          alighItems: "center",
+          justifyContent: "center",
+          textAlign: "center",
+        }
+      }>
+        <Typography variant="h4" gutterBottom sx={{ fontWeight: 800 , width:"100%", textTransform: "uppercase", color: "#381441", fontSize: "30px"}}>
+          Cadastro de Propriedade
         </Typography>
 
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
@@ -174,7 +181,16 @@ function App() {
               }}
             />
 
-          <Button type="submit">Cadastrar</Button>
+          <Button type="submit" sx={
+            {
+              backgroundColor: "#ccc",
+              color: "#381441",
+              "&:hover": {
+                backgroundColor: "#381441",
+                color: "#fff",
+              },
+            }
+          }>Cadastrar</Button>
 
           </Stack>
         </form>
