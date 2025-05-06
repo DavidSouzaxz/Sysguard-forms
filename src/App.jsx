@@ -23,24 +23,38 @@ function App() {
   }
 
   return (
-    <Container maxWidth="sm" >
+    <Container maxWidth="sm" sx={{
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center",
+      alignItems: "center",
+      textAlign: "center"
+    }}>
+      
+      <Typography variant="h4" gutterBottom sx={{ fontWeight: 800 , width:"100%", textTransform: "uppercase", color: "#fff", fontSize: "30px"}}>
+            Tela administrativa
+      </Typography>
       <Box className='box' sx={
         {
           mt: 4,
           display: "flex",
           flexDirection: "column",
           padding: "50px",
+          borderRadius: "25px",
           alighItems: "center",
           justifyContent: "center",
           textAlign: "center",
+          background: "linear-gradient(rgba(255, 255, 255, 0.11),rgba(255, 255, 255, 0.1))",
+          boxShadow: "0 2px 10px rgba(35, 35, 35, 0.54)",
+          backdropFilter: "blur(15px)",
         }
       }>
-        <Typography variant="h4" gutterBottom sx={{ fontWeight: 800 , width:"100%", textTransform: "uppercase", color: "#381441", fontSize: "30px"}}>
-          Cadastro de Propriedade
-        </Typography>
-
+        
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
           <Stack spacing={2}>
+            <Typography variant="h4" gutterBottom sx={{ fontWeight: 400 , width:"100%", textTransform: "uppercase", color: "#fff", fontSize: "25px"}}>
+              Cadastro de Propriedade
+            </Typography>
             <TextField
               label="Nome"
               {...register("nome", { required: "Nome é obrigatorio" })}
@@ -49,22 +63,27 @@ function App() {
               fullWidth
               InputLabelProps={{
                 sx:{
+                  color: "#fff",
                   '&.Mui-focused': {
-                    color: "#381441"
+                    color: "#101218"
                   }
                 }
               }}
               InputProps={{
                 sx: {
-                  "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                    borderColor: "#381441",
+                  "& .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "#fff",
                   },
-                    input: {
-                      color: "#381441",
-                    },
+                  "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "#101218",
+                  },
+                  "&:hover .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "#101218",
+                  },
+                  input: {
+                    color: "#fff",
+                  }
                 },
-
-                
               }}
             />
           
@@ -76,22 +95,27 @@ function App() {
               fullWidth
               InputLabelProps={{
                 sx:{
+                  color: "#fff",
                   '&.Mui-focused': {
-                    color: "#381441"
+                    color: "#101218"
                   }
                 }
               }}
               InputProps={{
                 sx: {
-                  "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                    borderColor: "#381441",
+                  "& .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "#fff",
                   },
-                    input: {
-                      color: "#381441",
-                    },
+                  "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "#101218",
+                  },
+                  "&:hover .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "#101218",
+                  },
+                  input: {
+                    color: "#fff",
+                  }
                 },
-
-                
               }}
             />
           
@@ -103,22 +127,27 @@ function App() {
               fullWidth
               InputLabelProps={{
                 sx:{
+                  color: "#fff",
                   '&.Mui-focused': {
-                    color: "#381441"
+                    color: "#101218"
                   }
                 }
               }}
               InputProps={{
                 sx: {
+                  "& .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "#fff",
+                  },
                   "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                    borderColor: "#381441",
+                    borderColor: "#101218",
+                  },
+                  "&:hover .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "#101218",
                   },
                     input: {
-                      color: "#381441",
+                      color: "#fff",
                     },
                 },
-
-                
               }}
             />
           
@@ -130,22 +159,27 @@ function App() {
               fullWidth
               InputLabelProps={{
                 sx:{
+                  color: "#fff",
                   '&.Mui-focused': {
-                    color: "#381441"
+                    color: "#101218"
                   }
                 }
               }}
               InputProps={{
                 sx: {
+                  "& .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "#fff",
+                  },
                   "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                    borderColor: "#381441",
+                    borderColor: "#101218",
+                  },
+                  "&:hover .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "#101218",
                   },
                     input: {
-                      color: "#381441",
+                      color: "#fff",
                     },
                 },
-
-                
               }}
             />
 
@@ -157,8 +191,9 @@ function App() {
               InputLabelProps={{
                 shrink: dataType === "date" || !!watch("pagamento"),
                 sx:{
+                  color: "#fff",
                   '&.Mui-focused': {
-                    color: "#381441"
+                    color: "#101218"
                   }
                 }
               }}
@@ -166,31 +201,48 @@ function App() {
               error={!!errors.pagamento}
               helperText={errors.pagamento?.message}
               fullWidth
-              
               InputProps={{
                 sx: {
-                  "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                    borderColor: "#381441",
+                  "& .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "#fff",
                   },
-                    input: {
-                      color: "#381441",
-                    },
+                  "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "#101218",
+                  },
+                  "&:hover .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "#101218",
+                  },
+                  input: {
+                    color: "#fff",
+                  }
                 },
-
-                
               }}
             />
 
           <Button type="submit" sx={
             {
               backgroundColor: "#ccc",
-              color: "#381441",
+              color: "#000",
               "&:hover": {
-                backgroundColor: "#381441",
+                backgroundColor: "#101218",
                 color: "#fff",
               },
             }
           }>Cadastrar</Button>
+
+          <Button 
+            onClick={() => window.history.back()} 
+            sx={{
+              backgroundColor: "#ccc",
+              color: "#000",
+              "&:hover": {
+                backgroundColor: "#101218",
+                color: "#fff",
+              }
+            }}
+          >
+            Voltar
+          </Button>
 
           </Stack>
         </form>
