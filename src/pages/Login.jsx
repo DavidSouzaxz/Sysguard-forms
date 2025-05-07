@@ -2,6 +2,8 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import styles from './css/Login.module.css';
+import MyHeader from '../components/MyHeader';
+import { Container } from '@mui/material';
 
 
 export const Login = () => {
@@ -24,22 +26,26 @@ export const Login = () => {
   };
 
   return (
-    <div className={styles.container}>
-      <h1>Login</h1>
-      <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
-        <label htmlFor="username" className={styles.label}>Username
-        <input {...register("name", { required: true })} className={styles.input} />
-        {errors.name && <span>Digite seu nome</span>}
-        </label>
+    <Container>
+      <MyHeader />
+      <div className={styles.container}>
+        
+        <h1>Login</h1>
+        <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
+          <label htmlFor="username" className={styles.label}>Username
+          <input {...register("name", { required: true })} className={styles.input} />
+          {errors.name && <span>Digite seu nome</span>}
+          </label>
 
-        <label htmlFor="password" className={styles.label}>Password
-        <input {...register("password", { required: true })} type="password" className={styles.input}/>
-        {errors.password && <span>Digite sua senha</span>}
-        </label>
+          <label htmlFor="password" className={styles.label}>Password
+          <input {...register("password", { required: true })} type="password" className={styles.input}/>
+          {errors.password && <span>Digite sua senha</span>}
+          </label>
 
-        <button type="submit">Entrar</button>
-        <p onClick={() => navigate('/Register')} className={styles.register}>Não possui conta? Registre-se.</p>
-      </form>
-    </div>
+          <button type="submit">Entrar</button>
+          <p onClick={() => navigate('/Register')} className={styles.register}>Não possui conta? Registre-se.</p>
+        </form>
+      </div>
+    </Container> 
   );
 };
