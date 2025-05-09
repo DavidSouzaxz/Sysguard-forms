@@ -4,26 +4,45 @@ import { useNavigate } from 'react-router-dom';
 import styles from './css/Login.module.css';
 import MyHeader from '../components/MyHeader';
 import { Container } from '@mui/material';
+import api from '../api/ApiConect';
 
 
 export const Login = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const navigate = useNavigate();
 
-  const onSubmit = async (data) => {
-    const response = await fetch('/data/users.json');
-    const users = await response.json();
+  
 
-    const user = users.find(
-      (u) => u.name === data.name && u.senha === data.password
-    );
-
-    if (user) {
-      navigate('/dashboard');
-    } else {
-      alert('Credenciais inválidas');
+  const handleLogin = async (data) => {
+    const loginData = {
+    login: data.name,
+    password: data.password
     }
-  };
+    try {
+      const response = await api.post(`${import.meta.env.VITE_API_URL}/auth/login`, loginData);
+
+      
+    
+      const token = response.data.token;
+      
+      if (!token) {
+        alert('Erro ao fazer login, verifique suas credenciais!');  
+        return;
+      }
+
+      localStorage.setItem('token', token);
+      api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    
+      navigate('/cadastro-propriedade');
+      console.log(token)
+    }catch (error) {
+        
+        console.error('Erro ao fazer login:', error);
+    }
+    
+    console.log('loginData:', loginData);
+  }
+  
 
   return (
     <Container>
@@ -31,7 +50,7 @@ export const Login = () => {
       <div className={styles.container}>
         
         <h1>Login</h1>
-        <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
+        <form onSubmit={handleSubmit(handleLogin)} className={styles.form}>
           <label htmlFor="username" className={styles.label}>Username
           <input {...register("name", { required: true })} className={styles.input} />
           {errors.name && <span>Digite seu nome</span>}
@@ -49,3 +68,4 @@ export const Login = () => {
     </Container> 
   );
 };
+export default Login;
