@@ -2,8 +2,11 @@ import React from 'react'
 import { Container, Button, IconButton } from '@mui/material'
 import styles from './css/Colaboradores.module.css'
 import MyHeader from '../components/MyHeader'
+import { useNavigate } from 'react-router-dom'
 
 const Colaboradores = () => {
+
+  const navigate = useNavigate();
 
   return (
 
@@ -24,7 +27,7 @@ const Colaboradores = () => {
             Estamos sempre abertos a novas ideias e colaborações.</p>
         </div>
         <div className={styles.buttons}>
-          <Button>Saber mais</Button>
+          <Button onClick={() => navigate(-1)}>Voltar</Button>
           <div className={styles.contact}>
 
             <IconButton
