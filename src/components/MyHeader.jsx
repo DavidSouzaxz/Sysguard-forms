@@ -73,6 +73,7 @@ export default function MyHeader() {
               cursor: 'pointer',
               marginRight: '20px',
             }}
+            onClick={() => navigate('/cadastro-propriedade')}
           >
             Home
           </Typography>

@@ -4,17 +4,35 @@ import { useNavigate } from 'react-router-dom';
 import styles from './css/Register.module.css';
 import MyHeader from '../components/MyHeader';
 import { Container } from '@mui/material';
+import api from '../api/ApiConect';
 
 const Register = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const navigate = useNavigate();
 
   const onSubmit = async (data) => {
-    console.log('Dados registrados:', data);
-    alert('Registro realizado com sucesso!');
-    navigate('/login');
-    
-  };
+    const registerData ={
+        login: data.name,
+        password: data.password,
+        role: data.role || 'USER',
+    }
+    try{
+      const response = await api.post(`${import.meta.env.VITE_API_URL}/auth/register`, registerData);
+
+      if(response.status === 200){
+        navigate('/Login');
+        alert('Registro realizado com sucesso!');
+        console.log('Registro:', response.data);
+      }else{
+        alert('Erro ao registrar, tente novamente!');
+      }
+    }catch(error){
+      console.error('Erro ao registrar:', error);
+      alert('Erro ao registrar, tente novamente!');
+    }
+
+    console.log('registerData:', registerData);
+  }
 
   return (
     <Container>
@@ -31,17 +49,6 @@ const Register = () => {
             {errors.name && <span>{errors.name.message}</span>}
           </label>
 
-          <label htmlFor="email" className={styles.label}>
-            Email
-            <input
-              {...register("email", {
-                required: "Email é obrigatório",
-                
-              })}
-              className={styles.input}
-            />
-            {errors.email && <span>{errors.email.message}</span>}
-          </label>
 
           <label htmlFor="password" className={styles.label}>
             Password
@@ -51,6 +58,24 @@ const Register = () => {
               className={styles.input}
             />
             {errors.password && <span>{errors.password.message}</span>}
+          </label>
+
+          <label htmlFor="role" className={styles.label}>
+            Role
+            <select
+              {...register("role", {
+                required: "Role é obrigatório",  
+              })}
+              className={styles.input}
+            >
+              <option value="ADMIN" style={{
+                color: '#999999',
+              }}>Admin</option>
+              <option value="USER" style={{
+                color: '#999999',
+              }}>User</option>
+            </select>
+            {errors.role && <span>{errors.role.message}</span>}
           </label>
 
           <button type="submit" className={styles.button}>Registrar</button>
