@@ -1,0 +1,28 @@
+.title{
+  display: flex;
+  justify-content: start;
+  width: 100%;
+  font-size: 2.5rem;
+  color: #fff;
+}
+
+.description> p {
+  text-align: justify;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+}
+
+.contact{
+  display: flex;
+  justify-content: end;
+  gap: 20px;
+  margin-top: 20px;
+  width: 100%;
+}
+
+.icon{
+  
+  width: 25px;
+  transition: all 0.3s ease-in-out;
+}

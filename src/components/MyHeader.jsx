@@ -29,7 +29,7 @@ export default function MyHeader() {
 
   return (
     <AppBar
-      position="absolute"
+      position="fixed"
       sx={{
         background: 'linear-gradient(rgba(37, 41, 59, 0.12),rgba(255, 255, 255, 0.1))',
         boxShadow: '0 2px 10px rgba(44, 44, 44, 0.54)',

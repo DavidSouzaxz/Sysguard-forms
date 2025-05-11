@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './css/Home.module.css';
 import MyHeader from '../components/MyHeader';
+import Colaboradores from './Colaboradores';
 
 const Home = () => {
   const navigate = useNavigate();
@@ -27,6 +28,13 @@ const Home = () => {
             />
           </div>
         </div>
+      </section>
+      <section className={styles.home__sobre}>
+        <Colaboradores sx={{
+          display: 'flex',
+          
+          marginTop: '20px',
+        }} />
       </section>
     </div>
   );
