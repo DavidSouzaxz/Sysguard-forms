@@ -27,6 +27,14 @@
   cursor: initial;
 }
 
+.homeTitle span{
+  line-height: 55%;
+  font-size: 100px;
+  display: block;
+  color: #6DA1F9;
+  
+}
+
 .homeTitle{
   text-align: center;
   font-size: 2.5rem;
@@ -36,14 +44,14 @@
 
 .homeDescription{
   display: flex;
-  justify-content: center;
+  justify-content: start;
   flex-direction: column;
   align-items: start;
   text-align: justify;
-  font-size: 1.2rem;
-  margin-top: 10px;
+  font-size: 15px;
+  margin-top: 40px;
   color: #fff;
-  max-width:580px;
+  max-width:520px;
 }
 
 .homeDescription>button{
@@ -59,7 +67,8 @@
 
 .homeSubtitle{
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
+  gap:10%;
 }
 
 .homeimg{
@@ -184,15 +193,87 @@ hr{
   margin: 25px 0 0 0;
 }
 
-.home__contato{
+.home__propriedades{
   display:flex;
   justify-content: center;
+  flex-direction: column;
+  justify-content: center;
+  align-self: center;
   margin-top: 10%;
 }
 
 .subtitle{
   display: flex;
   justify-content: center;
-  font-size: 25px;
   color: #fff;
+}
+
+.subtitle>h2{
+  font-size: 25px;
+  background: linear-gradient(180deg, #6DA1F9 0%, #fff 200% );
+}
+
+.box__propriedades{
+  height: 350px;
+  width: 350px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease-in-out;
+}
+
+.box__propriedades>img{
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  transition: all 0.3s ease-in-out;
+}
+
+.box__propriedades>p{
+  color: #fff;
+  font-weight: 700;
+}
+
+.box__propriedades:hover{
+  cursor: pointer;
+ 
+}
+
+
+
+.box__propriedades:hover>img{
+  border: 1px solid #6DA1F9;
+  box-shadow: 0px 0px 10px #6DA1F9
+}
+
+@keyframes cascade {
+  0%   { margin-top: 0px; }
+  20%  { margin-top: 60px; }
+  40%  { margin-top: 40px; }
+  60%  { margin-top: 20px; }
+  80%  { margin-top: 0px; }
+  100% { margin-top: 0px; }
+}
+
+.cascade1 {
+  animation: cascade 7s linear infinite;
+}
+.cascade2 {
+  animation: cascade 7s linear infinite;
+  animation-delay: 1s;
+}
+.cascade3 {
+  animation: cascade 7s linear infinite;
+  animation-delay: 2s;
+}
+
+
+
+
+.box__propriedades:hover ~ .box__propriedades,
+.box__propriedades:hover,
+.box__propriedades:focus,
+.home__propriedades:hover .box__propriedades {
+  animation-play-state: paused !important;
 }

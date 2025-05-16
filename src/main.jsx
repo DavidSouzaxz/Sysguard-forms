@@ -7,6 +7,7 @@ import CadastroProprieadade from './pages/CadastroProprieadade.jsx';
 import Login from './pages/Login.jsx';
 import Register from './pages/Register.jsx';
 import Colaboradores from './pages/Colaboradores.jsx';
+import Propriedades from './pages/Propriedades.jsx';
 
 const PrivateRoute = ({ children }) => {
   const token = localStorage.getItem('token');
@@ -22,6 +23,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/colaboradores" element={<Colaboradores />} />
+        <Route path="/propriedades" element={<Propriedades/>}/>        
         <Route
           path="/cadastro-propriedade"
           element={

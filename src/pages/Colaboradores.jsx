@@ -33,7 +33,7 @@ const Colaboradores = () => {
 
         <div className={styles.subtitle}>
           <i class="fa-solid fa-arrow-down"></i>
-          <p>Conheça um de nosso colaboradores</p>
+          <p>Conheça um de nossos colaboradores</p>
           <i class="fa-solid fa-arrow-down"></i>
         </div>
         <div className={styles.card}>

@@ -15,7 +15,7 @@ const Home = () => {
       <MyHeader />
       <section className={styles.home}>
         <div className={styles.homeTitle}>
-          <h1>Bem-vindo ao Sistema de Sysguard</h1>
+          <h1>Bem-vindo ao Sistema <span>Sysguard</span></h1>
         </div>
 
         <div className={styles.homeSubtitle}>
@@ -105,12 +105,29 @@ const Home = () => {
           </div>
         </Container>
       </section>
-      <section className={styles.home__}>
-        <Container>
+      <section className={styles.home__propriedades}>
         <div className={styles.subtitle}>
-          <h2>Fale conosco</h2>
+          <h2>Fique por dentro das suas propriedades</h2>
         </div>
-        
+
+        <Container sx={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          
+        }}>
+          <div className={`${styles.box__propriedades} ${styles.cascade1}`} onClick={() => navigate('/propriedades')}>
+              <img src="https://images.adsttc.com/media/images/5c34/ae9e/08a5/e5fb/0600/0158/newsletter/FEATURE_IMAGE_(1).jpg?1546956437" alt="" />
+              <p>Autonomia de negócios</p>
+          </div>
+          <div className={`${styles.box__propriedades} ${styles.cascade2}`} onClick={() => navigate('/propriedades')}>
+              <img src="https://images.adsttc.com/media/images/5cbe/3573/284d/d16b/1100/0170/newsletter/24415PR151116-018D.jpg?1555969378 " alt="" />
+              <p>Autonomia de negócios</p>
+          </div>
+          <div className={`${styles.box__propriedades} ${styles.cascade3}`} onClick={() => navigate('/propriedades')}>
+              <img src="https://images.adsttc.com/media/images/5c34/ae9e/08a5/e5fb/0600/0158/newsletter/FEATURE_IMAGE_(1).jpg?1546956437" alt="" />
+              <p>Autonomia de negócios</p>
+          </div>
 
         </Container>
       </section>
