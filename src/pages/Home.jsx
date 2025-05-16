@@ -1,4 +1,4 @@
-import React from 'react';
+import {useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './css/Home.module.css';
 import MyHeader from '../components/MyHeader';
@@ -6,21 +6,24 @@ import { Container,Button,IconButton } from '@mui/material'
 
 const Home = () => {
   const navigate = useNavigate();
+  useEffect(() => {
+      window.scrollTo(0, 0);
+    }, []);
 
   return (
     <div className={styles.body}> 
       <MyHeader />
       <section className={styles.home}>
         <div className={styles.homeTitle}>
-          <h1>Bem-vindo ao Sistema de Cadastro de Propriedades</h1>
+          <h1>Bem-vindo ao Sistema de Sysguard</h1>
         </div>
 
         <div className={styles.homeSubtitle}>
           <div className={styles.homeDescription}>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vestibulum tempor turpis vitae dignissim. Quisque quis egestas nisl, sed fringilla nibh. Quisque ipsum magna, blandit nec nisl nec, porta bibendum nibh. Mauris vestibulum ultricies metus ut condimentum. Aenean volutpat id lorem at dapibus. Nulla facilisi. Donec tempus, purus sed interdum tempor, ipsum ex iaculis neque, vel pellentesque velit turpis sed risus.</p>
-            <button onClick={() => navigate('/login')}>Acessar o sistema</button>
+            <button onClick={() => navigate('/cadastro-propriedade')}>Acessar o sistema</button>
           </div>
-          <div className="home__image-container">
+          <div className={styles.home__image_container}>
             <img
               src="./src/images/elemento.png"
               alt="Imagem de Propriedade"
@@ -35,8 +38,7 @@ const Home = () => {
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          padding: '20px',
-          borderRadius: '8px',
+          borderRadius: '8px'
         }}>
           <div className={styles.title}>
             <h1>Colaboradores</h1>
@@ -48,33 +50,68 @@ const Home = () => {
               Estamos sempre abertos a novas ideias e colaborações.</p>
           </div>
           <div className={styles.buttons}>
-            <Button onClick={() => navigate("/colaboradores")}>Saber mais</Button>
-            <div className={styles.contact}>
+            <Button variant="contained" onClick={() => navigate("/colaboradores")} sx={{
+              background: 'linear-gradient(90deg, #6DA1F9 0%, #3578e5 100%)',
+              color: '#fff',
+              transition: 'all 0.3s ease-in-out',
+              '&:hover': {
+                background: '#fff',
+                color: '#6DA1F9',
+                boxShadow: '0px 0px 5px #fff'
+              },
+            }}>Saber mais</Button>
+          </div>
+        </Container>
+      </section>
 
-              <IconButton
-                aria-label="delete"
-                sx={{
-                  padding: "10px",
-                  transition: 'background-color 0.3s'
-                  , '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.1)' }
-                }}
-              >
-                <img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" alt="Github" className={styles.icon} />
-              </IconButton>
-              <IconButton
-                color='secondary'
-                sx={{ '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.1)' } }}
-              >
-                <img src="https://cdn-icons-png.flaticon.com/512/1384/1384063.png" alt="Instagram" className={styles.icon} />
-              </IconButton>
-              <IconButton
-                aria-label="add an alarm"
-                sx={{ '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.1)' } }}
-              >
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Gmail_icon_%282020%29.svg/2560px-Gmail_icon_%282020%29.svg.png" alt="Instagram" className={styles.icon} />
-              </IconButton>
+      <section style={{
+        display:'flex',
+        marginTop: '20px',
+      }}>
+        <Container sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          marginTop: '20px',
+        }}>
+          {/* <div className={styles.title}>
+            <h4>Serviços</h4>
+          </div> */}
+          <div className={styles.servicos}>
+            <div className={styles.box__servico}>
+                <p>Aonde pode-se cadastrar propriedades para organização de propriedades.</p>
+                <hr />
+                <h3>Cadastro de propriedades</h3>
+                <img src="./src/images/cadastro.png" alt="" />
+            </div>
+            <div className={styles.box__servico}>
+                <p>Aonde pode-se cadastrar propriedades para organização de propriedades.</p>
+                <hr />
+                <h3>Pesquisa de propriedades</h3>
+                <img src="https://img.freepik.com/vetores-gratis/casal-azul-com-lupa-estilo-plano_114360-95.jpg?t=st=1747048169~exp=1747051769~hmac=7ff886785577f7192b8d5d4e4a7b76e53313c24bc0ea49e91c1c99a9c3782320&w=826" alt="" />
+            </div>
+            <div className={styles.box__servico}>
+                <p>Aonde pode-se cadastrar propriedades para organização de propriedades.</p>
+                <hr />
+                <h3>Pesquisa de propriedades</h3>
+                <i class="fa-solid fa-address-card"></i>
+            </div>
+            <div className={styles.box__servico}>
+                <p>Aonde pode-se cadastrar propriedades para organização de propriedades.</p>
+                <hr />
+                <h3>Pesquisa de propriedades</h3>
+                <i class="fa-solid fa-address-card"></i>
+                
             </div>
           </div>
+        </Container>
+      </section>
+      <section className={styles.home__}>
+        <Container>
+        <div className={styles.subtitle}>
+          <h2>Fale conosco</h2>
+        </div>
+        
+
         </Container>
       </section>
     </div>
