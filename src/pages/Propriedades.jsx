@@ -1,23 +1,73 @@
 import React, { useState } from 'react'
 import { Button } from '@mui/material'
-import styles from './css/Colaboradores.module.css'
+import styles from './css/Propriedade.module.css'
+import MyHeader from '../components/MyHeader'
+import { useEffect } from 'react'
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 const Propriedades = () => {
   const [ativo, setAtivo] = useState(false);
+  const [propriedades, setPropriedades] = useState([])
+  const navigate = useNavigate()
 
   const handleClick = () => {
     setAtivo((prev) => !prev);
   };
 
+  useEffect(() => {
+    const fetchPropriedades = async () => {
+      try {
+        const token = localStorage.getItem('token')
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/propriedades`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        console.log('Propriedades: ', response.data)
+        setPropriedades(response.data)
+      } catch (error) {
+        console.error('Erro ao buscar propriedades:', error)
+      }
+    }
+    fetchPropriedades()
+  }, [])
+
   return (
-    <div className={styles.body}>
-      <section >
+    <div className={styles.body__propriedades}>
+      <MyHeader />
+      <section  className={styles.container__propriedades}>
         <div className='message' style={{
           color: 'white',
+          position: 'fixed',
+          top: '50%',
+          left: '45%',
+          display: Array.isArray(propriedades.data) && propriedades.data.length >0 ? 'none' : 'block'
         }}>Propriedades
         </div>
 
+          {Array.isArray(propriedades.data) && propriedades.data.map((prop) => (
+            <div className={styles.container__box} key={prop.id}>
+              <div className={styles.box__image}>
+                <img
+                  src="https://images.adsttc.com/media/images/5c34/ae9e/08a5/e5fb/0600/0158/newsletter/FEATURE_IMAGE_(1).jpg?1546956437"
+                  alt={prop.nome}
+                />
+              </div>
+              <div className={styles.box__title}>
+                <h2>{prop.nome}</h2>
+              </div>
+              <div className={styles.box__subtitle}>
+                <hr />
+                <p>{prop.endereco}</p>
+              </div>
+            </div>
+          ))}
+
         
+
+
+
         <Button
           onClick={handleClick}
           sx={{
@@ -41,7 +91,6 @@ const Propriedades = () => {
           }}
         >+</Button>
 
-       
         <Button
           sx={{
             position: 'fixed',
@@ -54,10 +103,11 @@ const Propriedades = () => {
             top: ativo ? '80%' : '90%',
             left: '93%',
             color: '#fff',
+            background: '#0D1117',
             border: ativo ? '2px solid #fff' : 'none',
             alignItems: 'center',
             justifyContent: 'center',
-            fontSize: '2rem',
+            fontSize: '20px',
             boxShadow: 3,
             transition: 'top 0.3s, display 0s',
             zIndex: 9,
@@ -67,7 +117,7 @@ const Propriedades = () => {
             },
           }}
           className={styles.opcao__button}
-        >+</Button>
+        ><i className="fa-solid fa-list"></i></Button>
         <Button
           sx={{
             position: 'fixed',
@@ -80,10 +130,11 @@ const Propriedades = () => {
             top: ativo ? '72%' : '90%',
             left: '93%',
             color: '#fff',
+            background: '#0D1117',
             border: ativo ? '2px solid #fff' : 'none',
             alignItems: 'center',
             justifyContent: 'center',
-            fontSize: '2rem',
+            fontSize: '19px',
             boxShadow: 3,
             transition: 'top 0.4s, display 0s',
             zIndex: 8,
@@ -93,12 +144,13 @@ const Propriedades = () => {
             },
           }}
           className={styles.opcao__button}
-        >+</Button>
+        ><i className="fa-solid fa-trash"></i></Button>
         <Button
           sx={{
             position: 'fixed',
             display: 'flex',
             color: '#fff',
+            background: '#0D1117',
             border: ativo ? '2px solid #fff' : 'none',
             borderRadius: '50%',
             minWidth: '52px',
@@ -109,7 +161,7 @@ const Propriedades = () => {
             left: '93%',
             alignItems: 'center',
             justifyContent: 'center',
-            fontSize: '2rem',
+            fontSize: '19px',
             boxShadow: 3,
             transition: 'top 0.5s, display 0s',
             zIndex: 7,
@@ -118,8 +170,8 @@ const Propriedades = () => {
               color: '#000',
             },
           }}
-          className={styles.opcao__button}
-        >+</Button>
+          className={styles.opcao__button} onClick={() => navigate('/registro')}
+        ><i className="fa-solid fa-pencil"></i></Button>
       </section>
     </div>
   )

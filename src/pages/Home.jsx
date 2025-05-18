@@ -21,7 +21,7 @@ const Home = () => {
         <div className={styles.homeSubtitle}>
           <div className={styles.homeDescription}>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vestibulum tempor turpis vitae dignissim. Quisque quis egestas nisl, sed fringilla nibh. Quisque ipsum magna, blandit nec nisl nec, porta bibendum nibh. Mauris vestibulum ultricies metus ut condimentum. Aenean volutpat id lorem at dapibus. Nulla facilisi. Donec tempus, purus sed interdum tempor, ipsum ex iaculis neque, vel pellentesque velit turpis sed risus.</p>
-            <button onClick={() => navigate('/cadastro-propriedade')}>Acessar o sistema</button>
+            <button onClick={() => navigate('/registro')}>Acessar o sistema</button>
           </div>
           <div className={styles.home__image_container}>
             <img

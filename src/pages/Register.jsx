@@ -11,22 +11,22 @@ const Register = () => {
   const navigate = useNavigate();
 
   const onSubmit = async (data) => {
-    const registerData ={
-        login: data.name,
-        password: data.password,
-        role: data.role || 'USER',
+    const registerData = {
+      login: data.name,
+      password: data.password,
+      role: data.role || 'USER',
     }
-    try{
+    try {
       const response = await api.post(`${import.meta.env.VITE_API_URL}/auth/register`, registerData);
 
-      if(response.status === 200){
+      if (response.status === 200) {
         navigate('/Login');
         alert('Registro realizado com sucesso!');
         console.log('Registro:', response.data);
-      }else{
+      } else {
         alert('Erro ao registrar, tente novamente!');
       }
-    }catch(error){
+    } catch (error) {
       console.error('Erro ao registrar:', error);
       alert('Erro ao registrar, tente novamente!');
     }
@@ -35,56 +35,62 @@ const Register = () => {
   }
 
   return (
-    <Container>
+    <div className={styles.body__register}>
       <MyHeader />
-      <div className={styles.container}>
-      <h1 className={styles.title}>Registro</h1>
-        <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
-          <label htmlFor="name" className={styles.label}>
-            Username
-            <input
-              {...register("name", { required: "Nome é obrigatório" })}
-              className={styles.input}
-            />
-            {errors.name && <span>{errors.name.message}</span>}
-          </label>
+      <Container sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
+      }}>
+        <div className={styles.container__register}>
+          <h1 className={styles.title}>Registro</h1>
+          <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
+            <label htmlFor="name" className={styles.label}>
+              Username
+              <input
+                {...register("name", { required: "Nome é obrigatório" })}
+                className={styles.input}
+              />
+              {errors.name && <span>{errors.name.message}</span>}
+            </label>
 
 
-          <label htmlFor="password" className={styles.label}>
-            Password
-            <input
-              {...register("password", { required: "Senha é obrigatória" })}
-              type="password"
-              className={styles.input}
-            />
-            {errors.password && <span>{errors.password.message}</span>}
-          </label>
+            <label htmlFor="password" className={styles.label}>
+              Password
+              <input
+                {...register("password", { required: "Senha é obrigatória" })}
+                type="password"
+                className={styles.input}
+              />
+              {errors.password && <span>{errors.password.message}</span>}
+            </label>
 
-          <label htmlFor="role" className={styles.label}>
-            Role
-            <select
-              {...register("role", {
-                required: "Role é obrigatório",  
-              })}
-              className={styles.input}
-            >
-              <option value="ADMIN" style={{
-                color: '#999999',
-              }}>Admin</option>
-              <option value="USER" style={{
-                color: '#999999',
-              }}>User</option>
-            </select>
-            {errors.role && <span>{errors.role.message}</span>}
-          </label>
+            <label htmlFor="role" className={styles.label}>
+              Role
+              <select
+                {...register("role", {
+                  required: "Role é obrigatório",
+                })}
+                className={styles.input}
+              >
+                <option value="ADMIN" style={{
+                  color: '#999999',
+                }}>Admin</option>
+                <option value="USER" style={{
+                  color: '#999999',
+                }}>User</option>
+              </select>
+              {errors.role && <span>{errors.role.message}</span>}
+            </label>
 
-          <button type="submit" className={styles.button}>Registrar</button>
-          <p onClick={() => navigate('/Login')} className={styles.register}>
-            Já possui conta? Faça login.
-          </p>
-        </form>
-      </div>
-    </Container>
+            <button type="submit" className={styles.button}>Registrar</button>
+            <p onClick={() => navigate('/Login')} className={styles.register}>
+              Já possui conta? Faça login.
+            </p>
+          </form>
+        </div>
+      </Container>
+    </div>
   );
 };
 

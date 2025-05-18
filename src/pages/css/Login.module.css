@@ -4,7 +4,15 @@
   font-family: "Montserrat", sans-serif;
 }
 
-.container{
+.body__login{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10%;
+  
+}
+
+.container__login{
   border-radius: 15px;
   display: flex;
   flex-direction: column;

@@ -23,9 +23,17 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/colaboradores" element={<Colaboradores />} />
-        <Route path="/propriedades" element={<Propriedades/>}/>        
+        
+        <Route 
+          path="/propriedades" 
+          element={
+            <PrivateRoute> 
+              <Propriedades/>
+            </PrivateRoute>  
+          }
+        />        
         <Route
-          path="/cadastro-propriedade"
+          path="/registro"
           element={
             <PrivateRoute>
               <CadastroProprieadade />

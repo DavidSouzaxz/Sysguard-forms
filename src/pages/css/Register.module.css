@@ -1,4 +1,14 @@
-.container {
+.body__register{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10%;
+  
+}
+
+
+
+.container__register {
   display: flex;
   flex-direction: column;
   justify-content: center;
