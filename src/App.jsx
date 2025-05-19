@@ -1,5 +1,5 @@
-import React from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import Home from './pages/Home.jsx';
 import CadastroProprieadade from './pages/CadastroProprieadade.jsx';
 import Login from './pages/Login.jsx';
@@ -10,41 +10,70 @@ import { isTokenValidat } from './api/IsTokenValidat.jsx';
 
 const PrivateRoute = ({ children }) => {
   const token = localStorage.getItem('token');
-  return token ? children : <Navigate to="/login" replace />;
+  const valid = isTokenValidat();
+  return token && valid ? children : <Navigate to="/login" replace />;
 };
 
 const App = () => {
-  // Verifica a validade do token ao carregar a aplicação
-  if (!isTokenValidat()) {
-    localStorage.removeItem('token');
-    localStorage.removeItem('token_expiration');
-  }
+
+  const navigate = useNavigate()
+
+
+  useEffect(() => {
+    const logout = () => {
+      
+      localStorage.removeItem('token');
+      navigate('/login');
+    };
+
+    const checkTokenValidity = () => {
+      const isValid = isTokenValidat()
+      
+      if (!isValid) {
+        logout()
+      }
+    }
+    checkTokenValidity()
+
+    const intervalId = setInterval(() => {
+      checkTokenValidity()
+    }, 60 * 60 * 1000)
+
+    return () => clearInterval(intervalId)
+
+
+  },[navigate])
+
+
+
+
+
 
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/colaboradores" element={<Colaboradores />} />
-        <Route 
-          path="/propriedades" 
-          element={
-            <PrivateRoute> 
-              <Propriedades />
-            </PrivateRoute>  
-          }
-        />        
-        <Route
-          path="/registro"
-          element={
-            <PrivateRoute>
-              <CadastroProprieadade />
-            </PrivateRoute>
-          }
-        />
-      </Routes>
-    </BrowserRouter>
+
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+      <Route path="/colaboradores" element={<Colaboradores />} />
+      <Route
+        path="/propriedades"
+        element={
+          <PrivateRoute>
+            <Propriedades />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/registro"
+        element={
+          <PrivateRoute>
+            <CadastroProprieadade />
+          </PrivateRoute>
+        }
+      />
+    </Routes>
+
   );
 };
 

@@ -1,8 +1,18 @@
-import React from 'react'
+import { jwtDecode } from 'jwt-decode';
 
 export const isTokenValidat = () => {
-  const expiration = localStorage.getItem('token_expiration');
-  if(!expiration) return false
-  const now = new Date().getTime();
-  return now < parseInt(expiration)
-}
+  const token = localStorage.getItem('token');
+  if (!token) {
+    console.log("Token não encontrado");
+    return false;
+  }
+
+  try {
+    const decoded = jwtDecode(token);
+    const now = Date.now();
+    return decoded.exp*1000 > now;
+  } catch (error) {
+    console.error("Erro ao decodificar o token:", error);
+    return false;
+  }
+};

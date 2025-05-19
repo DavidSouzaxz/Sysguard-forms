@@ -13,9 +13,8 @@ export const Login = () => {
 
 
   const salvarToken = (token) =>{
-    const expiration = new Date().getTime() + 10 * 60 * 60 *1000
     localStorage.setItem('token', token);
-    localStorage.setItem('token_expiration', expiration.toString())
+    
   }
 
 
@@ -43,8 +42,6 @@ export const Login = () => {
 
       console.error('Erro ao fazer login:', error);
     }
-
-    console.log('loginData:', loginData);
   }
 
 
