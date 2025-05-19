@@ -1,46 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import App from './App.jsx';
 import './index.css';
-import Home from './pages/Home.jsx';
-import CadastroProprieadade from './pages/CadastroProprieadade.jsx';
-import Login from './pages/Login.jsx';
-import Register from './pages/Register.jsx';
-import Colaboradores from './pages/Colaboradores.jsx';
-import Propriedades from './pages/Propriedades.jsx';
-
-const PrivateRoute = ({ children }) => {
-  const token = localStorage.getItem('token');
-  return token ? children : <Navigate to="/login" replace />;
-};
-
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/colaboradores" element={<Colaboradores />} />
-        
-        <Route 
-          path="/propriedades" 
-          element={
-            <PrivateRoute> 
-              <Propriedades/>
-            </PrivateRoute>  
-          }
-        />        
-        <Route
-          path="/registro"
-          element={
-            <PrivateRoute>
-              <CadastroProprieadade />
-            </PrivateRoute>
-          }
-        />
-      </Routes>
-    </BrowserRouter>
+    <App />
   </React.StrictMode>
 );

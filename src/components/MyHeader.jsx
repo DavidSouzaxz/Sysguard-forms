@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
@@ -10,10 +10,18 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { useNavigate } from 'react-router-dom';
 
+
 export default function MyHeader() {
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const [menuOpen, setMenuOpen] = useState(false); // Estado para controlar o menu
+  const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
+
+  const [logado, setLogado] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token')
+    setLogado(!!token)
+  }, [])
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -24,8 +32,19 @@ export default function MyHeader() {
   };
 
   const toggleMenu = () => {
-    setMenuOpen(!menuOpen); // Alterna entre aberto e fechado
+    setMenuOpen(!menuOpen); 
   };
+
+  const handleLogout = () => {
+    handleClose();
+    logout();
+  };
+
+  function logout() {
+    localStorage.removeItem('token');
+    localStorage.removeItem("token_expiration");
+    navigate("/login");
+  }
 
   return (
     <AppBar
@@ -40,10 +59,10 @@ export default function MyHeader() {
       <Toolbar
         sx={{
           display: 'flex',
-          justifyContent: 'space-between', 
-          alignItems: 'center', 
+          justifyContent: 'space-between',
+          alignItems: 'center',
           marginTop: '15px',
-          position: 'relative', 
+          position: 'relative',
         }}
       >
         <IconButton
@@ -73,7 +92,7 @@ export default function MyHeader() {
               cursor: 'pointer',
               marginRight: '20px',
             }}
-            onClick={() => navigate('/cadastro-propriedade')}
+            onClick={() => navigate('/registro')}
           >
             Home
           </Typography>
@@ -116,9 +135,12 @@ export default function MyHeader() {
         </Typography>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <Button color="inherit" onClick={() => navigate('/Login')}>
-            Login
-          </Button>
+          {!logado && (
+            <Button color="inherit" onClick={() => navigate('/Login')}
+            >
+              Login
+            </Button>
+          )}
 
           <IconButton
             size="large"
@@ -146,7 +168,7 @@ export default function MyHeader() {
             onClose={handleClose}
           >
             <MenuItem onClick={handleClose}>Perfil</MenuItem>
-            <MenuItem onClick={handleClose}>Sair</MenuItem>
+            <MenuItem onClick={handleLogout} >Sair</MenuItem>
           </Menu>
         </div>
       </Toolbar>

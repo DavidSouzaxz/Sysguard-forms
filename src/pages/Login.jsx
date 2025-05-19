@@ -12,6 +12,13 @@ export const Login = () => {
   const navigate = useNavigate();
 
 
+  const salvarToken = (token) =>{
+    const expiration = new Date().getTime() + 10 * 60 * 60 *1000
+    localStorage.setItem('token', token);
+    localStorage.setItem('token_expiration', expiration.toString())
+  }
+
+
 
   const handleLogin = async (data) => {
     const loginData = {
@@ -20,9 +27,6 @@ export const Login = () => {
     }
     try {
       const response = await api.post(`${import.meta.env.VITE_API_URL}/auth/login`, loginData);
-
-
-
       const token = response.data.token;
 
       if (!token) {
@@ -30,10 +34,10 @@ export const Login = () => {
         return;
       }
 
-      localStorage.setItem('token', token);
+      salvarToken(token)
       api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
-      navigate('/cadastro-propriedade');
+      navigate('/');
       console.log(token)
     } catch (error) {
 

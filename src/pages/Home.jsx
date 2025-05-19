@@ -1,17 +1,38 @@
-import {useEffect} from 'react';
+import { useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './css/Home.module.css';
 import MyHeader from '../components/MyHeader';
-import { Container,Button,IconButton } from '@mui/material'
+import { Container, Button, IconButton } from '@mui/material'
+
 
 const Home = () => {
+
   const navigate = useNavigate();
   useEffect(() => {
-      window.scrollTo(0, 0);
-    }, []);
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const expiration = localStorage.getItem("token_expiration");
+
+    if (token && expiration) {
+      const now = new Date().getTime();
+
+      if (now > Number(expiration)) {
+        localStorage.removeItem("token");
+        localStorage.removeItem("token_expiration");
+        
+        navigate("/login");
+      }
+    }
+  }, [navigate]);
+  
+
+  
 
   return (
-    <div className={styles.body}> 
+    <div className={styles.body}>
       <MyHeader />
       <section className={styles.home}>
         <div className={styles.homeTitle}>
@@ -65,7 +86,7 @@ const Home = () => {
       </section>
 
       <section style={{
-        display:'flex',
+        display: 'flex',
         marginTop: '20px',
       }}>
         <Container sx={{
@@ -78,29 +99,29 @@ const Home = () => {
           </div> */}
           <div className={styles.servicos}>
             <div className={styles.box__servico}>
-                <p>Aonde pode-se cadastrar propriedades para organização de propriedades.</p>
-                <hr />
-                <h3>Cadastro de propriedades</h3>
-                <img src="./src/images/cadastro.png" alt="" />
+              <p>Aonde pode-se cadastrar propriedades para organização de propriedades.</p>
+              <hr />
+              <h3>Cadastro de propriedades</h3>
+              <img src="./src/images/cadastro.png" alt="" />
             </div>
             <div className={styles.box__servico}>
-                <p>Aonde pode-se cadastrar propriedades para organização de propriedades.</p>
-                <hr />
-                <h3>Pesquisa de propriedades</h3>
-                <img src="https://img.freepik.com/vetores-gratis/casal-azul-com-lupa-estilo-plano_114360-95.jpg?t=st=1747048169~exp=1747051769~hmac=7ff886785577f7192b8d5d4e4a7b76e53313c24bc0ea49e91c1c99a9c3782320&w=826" alt="" />
+              <p>Aonde pode-se cadastrar propriedades para organização de propriedades.</p>
+              <hr />
+              <h3>Pesquisa de propriedades</h3>
+              <img src="https://img.freepik.com/vetores-gratis/casal-azul-com-lupa-estilo-plano_114360-95.jpg?t=st=1747048169~exp=1747051769~hmac=7ff886785577f7192b8d5d4e4a7b76e53313c24bc0ea49e91c1c99a9c3782320&w=826" alt="" />
             </div>
             <div className={styles.box__servico}>
-                <p>Aonde pode-se cadastrar propriedades para organização de propriedades.</p>
-                <hr />
-                <h3>Pesquisa de propriedades</h3>
-                <i class="fa-solid fa-address-card"></i>
+              <p>Aonde pode-se cadastrar propriedades para organização de propriedades.</p>
+              <hr />
+              <h3>Pesquisa de propriedades</h3>
+              <i className="fa-solid fa-address-card"></i>
             </div>
             <div className={styles.box__servico}>
-                <p>Aonde pode-se cadastrar propriedades para organização de propriedades.</p>
-                <hr />
-                <h3>Pesquisa de propriedades</h3>
-                <i class="fa-solid fa-address-card"></i>
-                
+              <p>Aonde pode-se cadastrar propriedades para organização de propriedades.</p>
+              <hr />
+              <h3>Pesquisa de propriedades</h3>
+              <i className="fa-solid fa-address-card"></i>
+
             </div>
           </div>
         </Container>
@@ -114,19 +135,19 @@ const Home = () => {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          
+
         }}>
           <div className={`${styles.box__propriedades} ${styles.cascade1}`} onClick={() => navigate('/propriedades')}>
-              <img src="https://images.adsttc.com/media/images/5c34/ae9e/08a5/e5fb/0600/0158/newsletter/FEATURE_IMAGE_(1).jpg?1546956437" alt="" />
-              <p>Autonomia de negócios</p>
+            <img src="https://images.adsttc.com/media/images/5c34/ae9e/08a5/e5fb/0600/0158/newsletter/FEATURE_IMAGE_(1).jpg?1546956437" alt="" />
+            <p>Autonomia de negócios</p>
           </div>
           <div className={`${styles.box__propriedades} ${styles.cascade2}`} onClick={() => navigate('/propriedades')}>
-              <img src="https://images.adsttc.com/media/images/5cbe/3573/284d/d16b/1100/0170/newsletter/24415PR151116-018D.jpg?1555969378 " alt="" />
-              <p>Autonomia de negócios</p>
+            <img src="https://images.adsttc.com/media/images/5cbe/3573/284d/d16b/1100/0170/newsletter/24415PR151116-018D.jpg?1555969378 " alt="" />
+            <p>Autonomia de negócios</p>
           </div>
           <div className={`${styles.box__propriedades} ${styles.cascade3}`} onClick={() => navigate('/propriedades')}>
-              <img src="https://images.adsttc.com/media/images/5c34/ae9e/08a5/e5fb/0600/0158/newsletter/FEATURE_IMAGE_(1).jpg?1546956437" alt="" />
-              <p>Autonomia de negócios</p>
+            <img src="https://images.adsttc.com/media/images/5c34/ae9e/08a5/e5fb/0600/0158/newsletter/FEATURE_IMAGE_(1).jpg?1546956437" alt="" />
+            <p>Autonomia de negócios</p>
           </div>
 
         </Container>
