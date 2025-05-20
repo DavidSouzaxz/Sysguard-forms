@@ -10,9 +10,17 @@ const Propriedades = () => {
   const [ativo, setAtivo] = useState(false);
   const [propriedades, setPropriedades] = useState([])
   const navigate = useNavigate()
+  const [selecionado,setSelecionado] = useState(false)
+
+  const select = (id) => {
+    
+    setSelecionado(id=== selecionado ? null : id)
+    console.log(id)
+  }
 
   const handleClick = () => {
     setAtivo((prev) => !prev);
+    
   };
 
   useEffect(() => {
@@ -24,7 +32,7 @@ const Propriedades = () => {
             Authorization: `Bearer ${token}`,
           },
         })
-        console.log('Propriedades: ', response.data)
+        
         setPropriedades(response.data)
       } catch (error) {
         console.error('Erro ao buscar propriedades:', error)
@@ -32,6 +40,42 @@ const Propriedades = () => {
     }
     fetchPropriedades()
   }, [])
+
+
+  
+  const listar = async () =>{
+    try{
+      const token = localStorage.getItem('token')
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/propriedades`,{
+        headers:{
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      setPropriedades(response.data)
+    }catch(error){
+      console.error('Erro ao listar propriedades: ', error)
+    }
+  }
+
+  const deletar = async() =>{
+    try{
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/propriedades/${selecionado}`,{
+        method:'DELETE',
+        headers:{
+          'Content-Type': 'application/json',
+          'Authorization':`Bearer ${localStorage.getItem('token')}`
+        }
+      })
+      if(!response.ok) throw new Error("Erro ao excluir");
+
+      setSelecionado(null)
+      listar()
+    }catch(err){
+      console.error(err)
+      alert('Erro ao excluir a propriedade')
+    }
+
+  }
 
   return (
     <div className={styles.body__propriedades}>
@@ -47,7 +91,12 @@ const Propriedades = () => {
         </div>
 
           {Array.isArray(propriedades.data) && propriedades.data.map((prop) => (
-            <div className={styles.container__box} key={prop.id}>
+            <div 
+              className={selecionado === prop.id ? `${styles.container__box} ${styles.container__box__active}` : styles.container__box} 
+              key={prop.id} 
+              onClick={() => select(prop.id)}
+              
+            >
               <div className={styles.box__image}>
                 <img
                   src="https://images.adsttc.com/media/images/5c34/ae9e/08a5/e5fb/0600/0158/newsletter/FEATURE_IMAGE_(1).jpg?1546956437"
@@ -119,6 +168,7 @@ const Propriedades = () => {
           className={styles.opcao__button}
         ><i className="fa-solid fa-list"></i></Button>
         <Button
+          onClick={deletar} 
           sx={{
             position: 'fixed',
             display: 'flex',

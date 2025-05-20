@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import styles from "./css/CadastroProprieadade.module.css"
+
 import {
   Container,
   TextField,
@@ -9,17 +10,49 @@ import {
   Box,
   Stack
 } from "@mui/material"
+import { Error } from "@mui/icons-material";
 
-function CadastroProprieadade() {
+const CadastroProprieadade = () => {
 
-  const { register, handleSubmit, watch,formState: { errors } } = useForm();
+  const { register, handleSubmit, watch, formState: { errors } } = useForm();
   const [dataType, setDataType] = useState("text")
   
-  
 
+
+  const cadastrar = async (payload) => {
+    try {
+      const token = localStorage.getItem('token')
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/propriedades`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify(payload)
+      })
+      if (!response.ok) {
+        const erro = await response.json();
+        console.error("Erro da API:", erro);
+      }
+
+      
+      alert('Cadastro feito com sucesso')
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
   function onSubmit(data) {
-    console.log(data)
+    const payload = {
+      nome: data.nome,
+      endereco: data.endereco,
+      gmail: data.gmail,
+      valorJuros: parseFloat(data.valorJuros),
+      valorMulta: parseFloat(data.valorMulta),
+      valorAluguel: parseFloat(data.valorAluguel),
+      dataVencimento: data.dataVencimento
+    };
+    cadastrar(payload)
   }
 
   return (
@@ -30,9 +63,9 @@ function CadastroProprieadade() {
       alignItems: "center",
       textAlign: "center"
     }}>
-      
-      <Typography variant="h4" gutterBottom sx={{ fontWeight: 800 , width:"100%", textTransform: "uppercase", color: "#fff", fontSize: "30px"}}>
-            Tela administrativa
+
+      <Typography variant="h4" gutterBottom sx={{ fontWeight: 800, width: "100%", textTransform: "uppercase", color: "#fff", fontSize: "30px" }}>
+        Tela administrativa
       </Typography>
       <Box className={styles.box} sx={
         {
@@ -49,10 +82,10 @@ function CadastroProprieadade() {
           backdropFilter: "blur(15px)",
         }
       }>
-        
+
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
           <Stack spacing={2}>
-            <Typography variant="h4" gutterBottom sx={{ fontWeight: 400 , width:"100%", textTransform: "uppercase", color: "#fff", fontSize: "25px"}}>
+            <Typography variant="h4" gutterBottom sx={{ fontWeight: 400, width: "100%", textTransform: "uppercase", color: "#fff", fontSize: "25px" }}>
               Cadastro de Propriedade
             </Typography>
             <TextField
@@ -62,7 +95,7 @@ function CadastroProprieadade() {
               helperText={errors.nome?.message}
               fullWidth
               InputLabelProps={{
-                sx:{
+                sx: {
                   color: "#fff",
                   '&.Mui-focused': {
                     color: "#101218"
@@ -86,15 +119,47 @@ function CadastroProprieadade() {
                 },
               }}
             />
-          
+
             <TextField
-              label ="Gmail"
-              {...register("email", { required: "Email é obrigatorio" })}
+              label="Endereço"
+              {...register("endereco", { required: "Endereco é obrigatorio" })}
+              error={!!errors.endereco}
+              helperText={errors.endereco?.message}
+              fullWidth
+              InputLabelProps={{
+                sx: {
+                  color: "#fff",
+                  '&.Mui-focused': {
+                    color: "#101218"
+                  }
+                }
+              }}
+              InputProps={{
+                sx: {
+                  "& .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "#fff",
+                  },
+                  "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "#101218",
+                  },
+                  "&:hover .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "#101218",
+                  },
+                  input: {
+                    color: "#fff",
+                  }
+                },
+              }}
+            />
+
+            <TextField
+              label="Gmail"
+              {...register("gmail", { required: "Gmail é obrigatorio" })}
               error={!!errors.email}
               helperText={errors.gmail?.message}
               fullWidth
               InputLabelProps={{
-                sx:{
+                sx: {
                   color: "#fff",
                   '&.Mui-focused': {
                     color: "#101218"
@@ -118,15 +183,15 @@ function CadastroProprieadade() {
                 },
               }}
             />
-          
+
             <TextField
               label="Valor do Aluguel"
-              {...register("number", { required: "Valor é obrigatorio" })}
+              {...register("valorAluguel", { required: "Valor é obrigatorio" })}
               error={!!errors.aluguel}
               helperText={errors.aluguel?.message}
               fullWidth
               InputLabelProps={{
-                sx:{
+                sx: {
                   color: "#fff",
                   '&.Mui-focused': {
                     color: "#101218"
@@ -144,21 +209,21 @@ function CadastroProprieadade() {
                   "&:hover .MuiOutlinedInput-notchedOutline": {
                     borderColor: "#101218",
                   },
-                    input: {
-                      color: "#fff",
-                    },
+                  input: {
+                    color: "#fff",
+                  },
                 },
               }}
             />
-          
+
             <TextField
-              label="Apartamento"
-              {...register("apartamento", { required: "Endereço do apartamento é obrigatorio" })}
-              error={!!errors.apartamento}
-              helperText={errors.apartamento?.message}
+              label="Multa em %"
+              {...register("valorMulta", { required: "Valor da multa é obrigatorio" })}
+              error={!!errors.multa}
+              helperText={errors.multa?.message}
               fullWidth
               InputLabelProps={{
-                sx:{
+                sx: {
                   color: "#fff",
                   '&.Mui-focused': {
                     color: "#101218"
@@ -176,9 +241,40 @@ function CadastroProprieadade() {
                   "&:hover .MuiOutlinedInput-notchedOutline": {
                     borderColor: "#101218",
                   },
-                    input: {
-                      color: "#fff",
-                    },
+                  input: {
+                    color: "#fff",
+                  },
+                },
+              }}
+            />
+            <TextField
+              label="Juros diário"
+              {...register("valorJuros", { required: "Valor do juros é obrigatorio" })}
+              error={!!errors.juros}
+              helperText={errors.juros?.message}
+              fullWidth
+              InputLabelProps={{
+                sx: {
+                  color: "#fff",
+                  '&.Mui-focused': {
+                    color: "#101218"
+                  }
+                }
+              }}
+              InputProps={{
+                sx: {
+                  "& .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "#fff",
+                  },
+                  "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "#101218",
+                  },
+                  "&:hover .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "#101218",
+                  },
+                  input: {
+                    color: "#fff",
+                  },
                 },
               }}
             />
@@ -189,15 +285,15 @@ function CadastroProprieadade() {
               onFocus={(e) => !e.target.value && setDataType("date")}
               onBlur={(e) => !e.target.value && setDataType("text")}
               InputLabelProps={{
-                shrink: dataType === "date" || !!watch("pagamento"),
-                sx:{
+                shrink: dataType === "date" || !!watch("dataVencimento"),
+                sx: {
                   color: "#fff",
                   '&.Mui-focused': {
                     color: "#101218"
                   }
                 }
               }}
-              {...register("pagamento", { required: "Data do pagamento é obrigatorio" })}
+              {...register("dataVencimento", { required: "Data do pagamento é obrigatorio" })}
               error={!!errors.pagamento}
               helperText={errors.pagamento?.message}
               fullWidth
@@ -219,30 +315,30 @@ function CadastroProprieadade() {
               }}
             />
 
-          <Button type="submit" sx={
-            {
-              backgroundColor: "#ccc",
-              color: "#000",
-              "&:hover": {
-                backgroundColor: "#101218",
-                color: "#fff",
-              },
-            }
-          }>Cadastrar</Button>
-
-          <Button 
-            onClick={() => window.history.back()} 
-            sx={{
-              backgroundColor: "#ccc",
-              color: "#000",
-              "&:hover": {
-                backgroundColor: "#101218",
-                color: "#fff",
+            <Button type="submit" sx={
+              {
+                backgroundColor: "#ccc",
+                color: "#000",
+                "&:hover": {
+                  backgroundColor: "#101218",
+                  color: "#fff",
+                },
               }
-            }}
-          >
-            Voltar
-          </Button>
+            }>Cadastrar</Button>
+
+            <Button
+              onClick={() => window.history.back()}
+              sx={{
+                backgroundColor: "#ccc",
+                color: "#000",
+                "&:hover": {
+                  backgroundColor: "#101218",
+                  color: "#fff",
+                }
+              }}
+            >
+              Voltar
+            </Button>
 
           </Stack>
         </form>

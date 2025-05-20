@@ -9,44 +9,22 @@ import Propriedades from './pages/Propriedades.jsx';
 import { isTokenValidat } from './api/IsTokenValidat.jsx';
 
 const PrivateRoute = ({ children }) => {
+  const navigate = useNavigate()
   const token = localStorage.getItem('token');
   const valid = isTokenValidat();
+
+  useEffect(() =>{
+    if(!token || !valid){
+      console.log("Token expirado")
+      localStorage.removeItem('token')
+      navigate('/login')
+    }
+  }, [token, valid, navigate])
+
   return token && valid ? children : <Navigate to="/login" replace />;
 };
 
 const App = () => {
-
-  const navigate = useNavigate()
-
-
-  useEffect(() => {
-    const logout = () => {
-      
-      localStorage.removeItem('token');
-      navigate('/login');
-    };
-
-    const checkTokenValidity = () => {
-      const isValid = isTokenValidat()
-      
-      if (!isValid) {
-        logout()
-      }
-    }
-    checkTokenValidity()
-
-    const intervalId = setInterval(() => {
-      checkTokenValidity()
-    }, 60 * 60 * 1000)
-
-    return () => clearInterval(intervalId)
-
-
-  },[navigate])
-
-
-
-
 
 
   return (
