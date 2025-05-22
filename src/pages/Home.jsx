@@ -1,4 +1,4 @@
-import { useEffect} from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './css/Home.module.css';
 import MyHeader from '../components/MyHeader';
@@ -22,14 +22,14 @@ const Home = () => {
       if (now > Number(expiration)) {
         localStorage.removeItem("token");
         localStorage.removeItem("token_expiration");
-        
+
         navigate("/login");
       }
     }
   }, [navigate]);
-  
 
-  
+
+
 
   return (
     <div className={styles.body}>
@@ -150,6 +150,45 @@ const Home = () => {
             <p>Autonomia de negócios</p>
           </div>
 
+        </Container>
+      </section>
+      <section className={styles.home__formulario}>
+        <Container sx={{
+          display: 'flex',
+          justifyContent: 'start',
+          marginBottom: '20px',
+          background: 'linear-gradient(200deg, rgba(255, 255, 255, 0.04) , rgba(199, 199, 199, 0.1))',
+          gap: '30px',
+          padding: '20px',
+          borderRadius: '15px',
+          alignItems: 'center'
+        }}>
+
+          <div className={styles.formulario}>
+            <form action="">
+              <label htmlFor="Nome">Nome
+                <input type="text" placeholder='Nome' />
+              </label>
+              <label htmlFor="Sobrenome">Sobrenome
+                <input type="text" placeholder='Sobrenome' />
+              </label>
+              <label htmlFor="Cpf">Cpf
+                <input type="text" placeholder='Cpf' />
+              </label>
+              <label htmlFor="Gmail">Gmail
+                <input type="text" placeholder='Gmail' />
+              </label>
+            </form>
+          </div>
+          <div className={styles.description__forms}>
+            <div className={styles.subtitle}>
+              <h3>Fale Conosco</h3>
+            </div>
+            <p>Este formulário serve para clientes que desejam falar com a sysguard, ou seja, clientes que tenham duvias, problemas ou queira falar conosco, envie mensagens por meio de um formulário bem simples e intuitivo de fácil acesso para todos, responderemos o mais rápido possivel. Agradecemos pela compreensão.</p>
+            <button>
+              Enviar
+            </button>
+          </div>
         </Container>
       </section>
     </div>

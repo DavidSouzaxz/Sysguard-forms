@@ -245,35 +245,74 @@ hr{
 .box__propriedades:hover>img{
   border: 1px solid #6DA1F9;
   box-shadow: 0px 0px 10px #6DA1F9
-}
-
-@keyframes cascade {
-  0%   { margin-top: 0px; }
-  20%  { margin-top: 60px; }
-  40%  { margin-top: 40px; }
-  60%  { margin-top: 20px; }
-  80%  { margin-top: 0px; }
-  100% { margin-top: 0px; }
-}
-
-.cascade1 {
-  animation: cascade 7s linear infinite;
-}
-.cascade2 {
-  animation: cascade 7s linear infinite;
-  animation-delay: 1s;
-}
-.cascade3 {
-  animation: cascade 7s linear infinite;
-  animation-delay: 2s;
+  
 }
 
 
 
+.home__formulario{
+  display:flex;
+  flex-direction: column;
+  margin-top: 30px;
+}
 
-.box__propriedades:hover ~ .box__propriedades,
-.box__propriedades:hover,
-.box__propriedades:focus,
-.home__propriedades:hover .box__propriedades {
-  animation-play-state: paused !important;
+
+.subtitle>h3{
+  font-size: 30px;
+  color: #fff;
+  margin: 0;
+}
+
+.formulario>form{
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  background:linear-gradient(190deg, rgba(255, 255, 255, 0.1) , rgba(145, 145, 145, 0.1));
+  box-shadow: 0px 0px 7px #00000030;
+  padding: 45px;
+  border-radius: 20px;
+  width: 250px;
+}
+
+.formulario>form>label{
+  display: flex;
+  flex-direction: column;
+  color: #fff;
+  font-weight: 600;
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+.formulario>form>label>input{
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #ffffff35;
+  outline: none;
+  backdrop-filter: blur(50px);
+  transition: 0.5s ease-in;
+}
+
+.formulario>form>label>input:focus {
+  border: 1px solid #fff;
+}
+
+.description__forms{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+  gap: 20px;
+  
+}
+
+.description__forms>p{
+  color: #fff;
+  text-align: justify;
+}
+
+.description__forms>button:hover{
+  background-color: #6DA1F9;
+  color: #fff;
+  box-shadow: 0px 0px 5px #6DA1F9;
 }

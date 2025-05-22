@@ -32,7 +32,7 @@ export default function MyHeader() {
   };
 
   const toggleMenu = () => {
-    setMenuOpen(!menuOpen); 
+    setMenuOpen(!menuOpen);
   };
 
   const handleLogout = () => {
@@ -80,7 +80,7 @@ export default function MyHeader() {
             display: 'flex',
             position: 'absolute',
             alignItems: 'center',
-            left: menuOpen ? '4%' : '-50%', // Controla a posição do menu
+            left: menuOpen ? '4%' : '-50%',
             transition: '0.5s ease-in-out',
           }}
           id="menu"
@@ -126,7 +126,7 @@ export default function MyHeader() {
             cursor: 'pointer',
             position: 'absolute',
             marginLeft: '2%',
-            transform: menuOpen ? 'translateX(230px)' : 'translateX(0)', // Move o texto "SysGuard"
+            transform: menuOpen ? 'translateX(230px)' : 'translateX(0)',
             transition: '0.5s ease-in-out',
           }}
           onClick={() => navigate('/')}
@@ -142,34 +142,39 @@ export default function MyHeader() {
             </Button>
           )}
 
-          <IconButton
-            size="large"
-            aria-label="conta do usuário"
-            aria-controls="menu-appbar"
-            aria-haspopup="true"
-            onClick={handleMenu}
-            color="inherit"
-          >
-            <AccountCircle />
-          </IconButton>
-          <Menu
-            id="menu-appbar"
-            anchorEl={anchorEl}
-            anchorOrigin={{
-              vertical: 'top',
-              horizontal: 'right',
-            }}
-            keepMounted
-            transformOrigin={{
-              vertical: 'top',
-              horizontal: 'right',
-            }}
-            open={Boolean(anchorEl)}
-            onClose={handleClose}
-          >
-            <MenuItem onClick={handleClose}>Perfil</MenuItem>
-            <MenuItem onClick={handleLogout} >Sair</MenuItem>
-          </Menu>
+          <>
+            {logado && (
+          <><IconButton
+                size="large"
+                aria-label="conta do usuário"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleMenu}
+                color="inherit"
+              >
+                <AccountCircle />
+              </IconButton><Menu
+                id="menu-appbar"
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+
+
+              >
+                  <MenuItem onClick={handleClose}>Perfil</MenuItem>
+                  <MenuItem onClick={handleLogout}>Sair</MenuItem>
+                </Menu></>
+            )}
+          </>
         </div>
       </Toolbar>
     </AppBar>
