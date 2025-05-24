@@ -1,76 +1,110 @@
 import React, { useState } from 'react'
 import { Button } from '@mui/material'
-import styles from './css/Propriedade.module.css'
+import styles from '../css/Propriedade.module.css'
 import MyHeader from '../components/MyHeader'
 import { useEffect } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import LoadingScreen from '../components/LoadingScreen'
+
 
 const Propriedades = () => {
   const [ativo, setAtivo] = useState(false);
   const [propriedades, setPropriedades] = useState([])
   const navigate = useNavigate()
-  const [selecionado,setSelecionado] = useState(false)
+  const [selecionado, setSelecionado] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
+
+
 
   const select = (id) => {
-    
-    setSelecionado(id=== selecionado ? null : id)
-    console.log(id)
+
+    setSelecionado(id === selecionado ? null : id)
+
   }
 
   const handleClick = () => {
     setAtivo((prev) => !prev);
-    
+
   };
+
+  //buscar id da empresa
+  const fetchEmpresaId = async () => {
+  const token = localStorage.getItem('token')
+  const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/empresa`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+  console.log(response.data)
+  // Acessa o id corretamente
+  if (Array.isArray(response.data.data) && response.data.data.length > 0) {
+    return response.data.data[0].id
+  }
+  throw new Error('ID da empresa não encontrado')
+}
 
   useEffect(() => {
     const fetchPropriedades = async () => {
       try {
         const token = localStorage.getItem('token')
-        const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/propriedades`, {
+
+        const empresaId = await fetchEmpresaId()
+
+
+
+
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/propriedade/empresa/${empresaId}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         })
+
         
         setPropriedades(response.data)
       } catch (error) {
         console.error('Erro ao buscar propriedades:', error)
+      } finally {
+        setIsLoading(false)
       }
     }
     fetchPropriedades()
   }, [])
 
 
-  
-  const listar = async () =>{
-    try{
+  if (isLoading) {
+    return <LoadingScreen />
+  }
+
+
+  const listar = async () => {
+    try {
       const token = localStorage.getItem('token')
-      const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/propriedades`,{
-        headers:{
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/propriedades`, {
+        headers: {
           Authorization: `Bearer ${token}`,
         },
       })
       setPropriedades(response.data)
-    }catch(error){
+    } catch (error) {
       console.error('Erro ao listar propriedades: ', error)
     }
   }
 
-  const deletar = async() =>{
-    try{
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/propriedades/${selecionado}`,{
-        method:'DELETE',
-        headers:{
+  const deletar = async () => {
+    try {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/propriedades/${selecionado}`, {
+        method: 'DELETE',
+        headers: {
           'Content-Type': 'application/json',
-          'Authorization':`Bearer ${localStorage.getItem('token')}`
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
       })
-      if(!response.ok) throw new Error("Erro ao excluir");
+      if (!response.ok) throw new Error("Erro ao excluir");
 
       setSelecionado(null)
       listar()
-    }catch(err){
+    } catch (err) {
       console.error(err)
       alert('Erro ao excluir a propriedade')
     }
@@ -80,40 +114,40 @@ const Propriedades = () => {
   return (
     <div className={styles.body__propriedades}>
       <MyHeader />
-      <section  className={styles.container__propriedades}>
+      <section className={styles.container__propriedades}>
         <div className='message' style={{
           color: 'white',
           position: 'fixed',
           top: '50%',
           left: '45%',
-          display: Array.isArray(propriedades.data) && propriedades.data.length >0 ? 'none' : 'block'
+          display: Array.isArray(propriedades.data) && propriedades.data.length > 0 ? 'none' : 'block'
         }}>Propriedades
         </div>
 
-          {Array.isArray(propriedades.data) && propriedades.data.map((prop) => (
-            <div 
-              className={selecionado === prop.id ? `${styles.container__box} ${styles.container__box__active}` : styles.container__box} 
-              key={prop.id} 
-              onClick={() => select(prop.id)}
-              
-            >
-              <div className={styles.box__image}>
-                <img
-                  src="https://images.adsttc.com/media/images/5c34/ae9e/08a5/e5fb/0600/0158/newsletter/FEATURE_IMAGE_(1).jpg?1546956437"
-                  alt={prop.nome}
-                />
-              </div>
-              <div className={styles.box__title}>
-                <h2>{prop.nome}</h2>
-              </div>
-              <div className={styles.box__subtitle}>
-                <hr />
-                <p>{prop.endereco}</p>
-              </div>
-            </div>
-          ))}
+        {Array.isArray(propriedades.data) && propriedades.data.map((prop) => (
+          <div
+            className={selecionado === prop.id ? `${styles.container__box} ${styles.container__box__active}` : styles.container__box}
+            key={prop.id}
+            onClick={() => select(prop.id)}
 
-        
+          >
+            <div className={styles.box__image}>
+              <img
+                src="https://images.adsttc.com/media/images/5c34/ae9e/08a5/e5fb/0600/0158/newsletter/FEATURE_IMAGE_(1).jpg?1546956437"
+                alt={prop.nome}
+              />
+            </div>
+            <div className={styles.box__title}>
+              <h2>{prop.nome}</h2>
+            </div>
+            <div className={styles.box__subtitle}>
+              <hr />
+              <p>{prop.endereco}</p>
+            </div>
+          </div>
+        ))}
+
+
 
 
 
@@ -168,7 +202,7 @@ const Propriedades = () => {
           className={styles.opcao__button}
         ><i className="fa-solid fa-list"></i></Button>
         <Button
-          onClick={deletar} 
+          onClick={deletar}
           sx={{
             position: 'fixed',
             display: 'flex',

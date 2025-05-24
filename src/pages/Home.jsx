@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import styles from './css/Home.module.css';
+import styles from '../css/Home.module.css';
 import MyHeader from '../components/MyHeader';
 import { Container, Button, IconButton } from '@mui/material'
 

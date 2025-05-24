@@ -1,6 +1,6 @@
 import { jwtDecode } from 'jwt-decode';
 
-export const isTokenValidat = () => {
+export const isTokenValidat = async () => {
   const token = localStorage.getItem('token');
   if (!token) {
     console.log("Token não encontrado");

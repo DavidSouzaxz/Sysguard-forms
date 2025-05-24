@@ -1,7 +1,7 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import styles from './css/Login.module.css';
+import styles from '../css/Login.module.css';
 import MyHeader from '../components/MyHeader';
 import { Container } from '@mui/material';
 import api from '../api/ApiConect';

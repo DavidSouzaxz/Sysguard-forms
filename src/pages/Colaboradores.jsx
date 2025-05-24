@@ -1,6 +1,6 @@
 import {useEffect} from 'react'
 import { Container, Button, IconButton } from '@mui/material'
-import styles from './css/Colaboradores.module.css'
+import styles from '../css/Colaboradores.module.css'
 import MyHeader from '../components/MyHeader'
 import { useNavigate } from 'react-router-dom'
 

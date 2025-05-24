@@ -103,8 +103,9 @@ export default function MyHeader() {
               cursor: 'pointer',
               marginRight: '20px',
             }}
+            onClick={() => navigate('/registro-empresa')}
           >
-            About
+            Empresa
           </Typography>
           <Typography
             sx={{

@@ -1,34 +1,66 @@
-import React, { useEffect } from 'react';
-import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
 import Home from './pages/Home.jsx';
 import CadastroProprieadade from './pages/CadastroProprieadade.jsx';
+import { CadastroEmpresas } from './pages/CadastroEmpresas.jsx';
 import Login from './pages/Login.jsx';
 import Register from './pages/Register.jsx';
 import Colaboradores from './pages/Colaboradores.jsx';
 import Propriedades from './pages/Propriedades.jsx';
 import { isTokenValidat } from './api/IsTokenValidat.jsx';
+import LoadingScreen from './components/LoadingScreen.jsx';
 
 const PrivateRoute = ({ children }) => {
-  const navigate = useNavigate()
-  const token = localStorage.getItem('token');
-  const valid = isTokenValidat();
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
+  const [isValid, setIsValid] = useState(false);
 
-  useEffect(() =>{
-    if(!token || !valid){
-      console.log("Token expirado")
-      localStorage.removeItem('token')
-      navigate('/login')
-    }
-  }, [token, valid, navigate])
+  useEffect(() => {
+    const checkToken = async () => {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        localStorage.removeItem('token');
+        navigate('/login');
+        return;
+      }
 
-  return token && valid ? children : <Navigate to="/login" replace />;
+      const valid = await isTokenValidat();
+      if (!valid) {
+        localStorage.removeItem('token');
+        navigate('/login');
+        return;
+      }
+
+      setIsValid(true);
+      setLoading(false);
+    };
+
+    checkToken();
+  }, [navigate]);
+
+  if (loading) return <LoadingScreen />;
+  return isValid ? children : <Navigate to="/login" replace />;
 };
 
 const App = () => {
+  const location = useLocation();
+  const [loading, setLoading] = useState(false);
 
+  useEffect(() => {
+    setLoading(true);
+
+    const timeout = setTimeout(() => {
+      setLoading(false);
+    }, 1000); // duração da tela de carregamento (1s)
+
+    return () => clearTimeout(timeout);
+  }, [location.pathname]);
+
+  if (loading) {
+    return <LoadingScreen />;
+  }
 
   return (
-
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
@@ -50,8 +82,15 @@ const App = () => {
           </PrivateRoute>
         }
       />
+      <Route
+        path="/registro-empresa"
+        element={
+          <PrivateRoute>
+            <CadastroEmpresas />
+          </PrivateRoute>
+        }
+      />
     </Routes>
-
   );
 };
 

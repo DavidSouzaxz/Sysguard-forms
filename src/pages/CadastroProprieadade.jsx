@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import styles from "./css/CadastroProprieadade.module.css"
+import styles from "../css/CadastroProprieadade.module.css"
 
 import {
   Container,
@@ -22,7 +22,7 @@ const CadastroProprieadade = () => {
   const cadastrar = async (payload) => {
     try {
       const token = localStorage.getItem('token')
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/propriedades`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/propriedades/empresa/{empresaId}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
